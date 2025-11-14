@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reinos Africanos — Kush, Axum e Meroé</title>
+  <meta name="description" content="Página interativa sobre os reinos de Kush, Axum e Meroé, com um tema extra sobre rotas comerciais e intercâmbio cultural." />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <header>
+    <div class="container top">
+      <div class="logo">
+        <!-- Substitua 'banner.jpg' pela sua imagem: se quiser que eu use o banner enviado, reenvie o arquivo. -->
+        <img src="/assets/banner.jpg" alt="Banner visual" onerror="this.style.display='none'" />
+        <div>
+          <div class="brand">Reinos Africanos — Kush · Axum · Meroé</div>
+          <div style="font-size:.85rem;opacity:.9">Um site interativo para estudar e apresentar</div>
+        </div>
+      </div>
+
+      <nav>
+        <div class="menu">
+          <a href="#sec-kingdoms">Reinos</a>
+          <a href="#sec-rotas">Rota Comercial</a>
+          <a href="#sec-timeline">Linha do Tempo</a>
+          <a href="#sec-fontes">Fontes</a>
+        </div>
+      </nav>
+
+      <button class="burger" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="card intro">
+        <h1>Explorando Kush, Axum e Meroé</h1>
+        <p>Resumo interativo com textos, mapa simples, linha do tempo e um tópico extra: <strong>rotas comerciais e intercâmbio cultural</strong> entre os reinos.</p>
+
+        <div class="tabs" role="tablist" aria-label="Selecionar reino">
+          <button class="tab active" data-kingdom="kush" onclick="selectTab(event)">Kush</button>
+          <button class="tab" data-kingdom="axum" onclick="selectTab(event)">Axum</button>
+          <button class="tab" data-kingdom="meroe" onclick="selectTab(event)">Meroé</button>
+        </div>
+
+        <div class="content-grid">
+          <div class="card kingdom" id="kingdom-content">
+            <!-- Conteúdo populado por JS -->
+          </div>
+
+          <aside class="card quick">
+            <div class="pill">Tópico extra: Rotas Comerciais</div>
+            <div style="font-size:.95rem">Toque nos pontos do mapa para ver conexões comerciais e influências culturais. Use o slider para ver eventos importantes.</div>
+            <div style="margin-top:12px" class="timeline">
+              <label for="timeRange" style="font-size:.85rem">Ano</label>
+              <input id="timeRange" type="range" min="-1000" max="700" value="0" oninput="updateYear(this.value)" />
+            </div>
+            <div id="yearLabel" style="text-align:center;font-weight:700;margin-top:8px">Ano 0</div>
+          </aside>
+        </div>
+
+      </div>
+
+      <aside class="card map">
+        <h3 style="margin-top:0">Mapa simplificado (interativo)</h3>
+        <!-- SVG simples; substitua por um mapa real se desejar -->
+        <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" id="svgMap">
+          <rect x="0" y="0" width="800" height="400" fill="transparent"/>
+          <!-- Mar Vermelho -->
+          <g id="sea" fill="#dff0ff">
+            <rect x="380" y="20" width="140" height="360"></rect>
+          </g>
+
+          <!-- Kush region -->
+          <g id="kush" transform="translate(120,150)" style="cursor:pointer" onclick="mapClick('kush')">
+            <ellipse cx="60" cy="60" rx="90" ry="40" fill="#ffdeda" stroke="#d47"/>
+            <text x="60" y="65" text-anchor="middle" font-size="14">Kush</text>
+          </g>
+
+          <!-- Meroé region -->
+          <g id="meroe" transform="translate(250,90)" style="cursor:pointer" onclick="mapClick('meroe')">
+            <rect x="0" y="0" width="140" height="80" rx="18" fill="#fff4d6" stroke="#d4a30f"/>
+            <text x="70" y="45" text-anchor="middle" font-size="14">Meroé</text>
+          </g>
+
+          <!-- Axum region -->
+          <g id="axum" transform="translate(560,100)" style="cursor:pointer" onclick="mapClick('axum')">
+            <polygon points="20,60 80,10 140,60 80,110" fill="#e9f7e9" stroke="#2a8f3c"/>
+            <text x="80" y="68" text-anchor="middle" font-size="14">Axum</text>
+          </g>
+
+          <!-- trade arrows example -->
+          <g id="arrows" stroke="#555" stroke-width="2" fill="none">
+            <path id="a1" d="M200 120 C 330 100, 460 120, 520 120" marker-end="url(#arrow)" opacity="0.7"/>
+            <path id="a2" d="M320 160 C 380 200, 480 220, 540 220" marker-end="url(#arrow)" opacity="0.7"/>
+          </g>
+
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <div style="margin-top:12px;font-size:.9rem;color:var(--muted)">Dica: toque/ clique em um reino para ver um resumo (ou use as abas).</div>
+      </aside>
+
+    </section>
+
+    <section id="sec-rotas" style="margin-top:18px">
+      <div class="card">
+        <h2>Rota Comercial & Intercâmbio Cultural</h2>
+        <p class="mini">Este é o <strong>assunto a mais</strong> que integramos aos três reinos: como o comércio (por terra e pelo Mar Vermelho) conectou Kush, Meroé e Axum — trocas de ouro, marfim, escravos, cerâmica, influências religiosas e linguísticas.</p>
+
+        <ul>
+          <li><strong>Kush & Meroé:</strong> rotas pelo Nilo e caravanas para o interior africano.</li>
+          <li><strong>Axum:</strong> centro portuário que ligava o Mar Vermelho ao comércio com a Península Arábica e o Mediterrâneo.</li>
+          <li><strong>Intercâmbio:</strong> chegada de moedas, escrita, elementos arquitetônicos e a disseminação do cristianismo em Axum enquanto Kush manteve práticas locais e contato com o Egito.</li>
+        </ul>
+
+        <p class="mini">Você pode editar esse texto com fatos do PDF que me enviou — note que o arquivo carregado expirou. Se quiser que eu use a identidade visual do seu banner ou trechos do PDF, reenvie o arquivo e eu atualizo automaticamente o layout e as imagens.</p>
+      </div>
+    </section>
+
+    <section id="sec-timeline" style="margin-top:18px">
+      <div class="card">
+        <h2>Linha do Tempo — eventos selecionados</h2>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button onclick="setYear(-800)">c.900 a.C. (ascensão de Kush)</button>
+          <button onclick="setYear(200)">c.200 d.C. (Axum em expansão)</button>
+          <button onclick="setYear(300)">c.300 d.C. (Meroé floresce)</button>
+        </div>
+        <div style="margin-top:12px">Use o slider no topo para navegar pelos anos; o conteúdo do painel se atualiza conforme o período.</div>
+      </div>
+    </section>
+
+    <section id="sec-fontes" style="margin-top:18px">
+      <div class="card">
+        <h2>Fontes & Referências</h2>
+        <p class="mini">(Placeholder) — Inclua aqui referências do seu material de estudo, bibliografia da escola, PDFs e links. Se você me enviar o PDF do banner/diagramas, eu insiro imagens e adapto o design às cores do seu material.</p>
+      </div>
+    </section>
+
+    <footer>
+      Criado especialmente para você — peça alterações, cores diferentes ou mais conteúdo. Se quiser, eu já deixo pronto para exportar como ZIP.
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
